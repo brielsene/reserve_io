@@ -27,4 +27,9 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     @JsonManagedReference
     private List<Quarto>quartos;
+
+    public Hotel(DadosCadastroHotel dados){
+        this.nome = dados.nome();
+        this.endereco = dados.endereco();
+    }
 }
