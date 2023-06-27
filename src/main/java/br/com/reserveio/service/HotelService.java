@@ -1,6 +1,7 @@
 package br.com.reserveio.service;
 
 import br.com.reserveio.domain.hotel.*;
+import br.com.reserveio.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,8 @@ public class HotelService {
             hotel.setStatus(Status.INDISPONIVEL);
             System.out.println(hotel.getStatus());
             hotelRepository.save(hotel);
+            return;
         }
+        throw new ValidacaoException("o  hotel com ID: "+id+", não existe");
     }
 }
