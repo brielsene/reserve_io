@@ -27,9 +27,13 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     @JsonManagedReference
     private List<Quarto>quartos;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "ENUM('DISPONIVEL', 'INDISPONIVEL')")
+    private Status status;
 
     public Hotel(DadosCadastroHotel dados){
         this.nome = dados.nome();
         this.endereco = dados.endereco();
+        this.status = Status.DISPONIVEL;
     }
 }
