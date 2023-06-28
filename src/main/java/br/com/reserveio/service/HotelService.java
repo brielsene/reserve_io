@@ -35,4 +35,23 @@ public class HotelService {
         }
         throw new ValidacaoException("o  hotel com ID: "+id+", não existe");
     }
+
+    public void atualiza (DadosAtualizaHotel dados){
+        Optional<Hotel> byId = hotelRepository.findById(dados.id());
+        System.out.println(byId.get().getId());
+        if(byId.isPresent()){
+            Hotel hotel = byId.get();
+            if(dados.nome() != null){
+                hotel.setNome(dados.nome());
+            }
+            if(dados.endereco() != null){
+                hotel.setEndereco(dados.endereco());
+            }
+
+
+            hotelRepository.save(hotel);
+            return;
+        }
+        throw new ValidacaoException("Hotel com id: "+ dados.id()+", não existe");
+    }
 }

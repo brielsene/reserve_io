@@ -1,5 +1,6 @@
 package br.com.reserveio.domain.controller;
 
+import br.com.reserveio.domain.hotel.DadosAtualizaHotel;
 import br.com.reserveio.domain.hotel.DadosCadastroHotel;
 import br.com.reserveio.domain.hotel.DadosDeHoteis;
 import br.com.reserveio.service.HotelService;
@@ -37,5 +38,11 @@ public class HotelController {
     public ResponseEntity excluirHotel(@PathVariable("id")Long id){
         hotelService.deletarHotel(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity atualizarHotel(@RequestBody DadosAtualizaHotel dados){
+        hotelService.atualiza(dados);
+        return ResponseEntity.ok().build();
     }
 }
