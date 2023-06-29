@@ -2,6 +2,7 @@ package br.com.reserveio.domain.controller;
 
 import br.com.reserveio.domain.quarto.DadosCadastroQuarto;
 import br.com.reserveio.domain.quarto.DadosDetalhamentoQuartos;
+import br.com.reserveio.domain.quarto.DadosEdicaoQuarto;
 import br.com.reserveio.service.QuartoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,17 @@ public class QuartoController {
     @GetMapping
     public ResponseEntity<List<DadosDetalhamentoQuartos>>listar(){
         return ResponseEntity.ok(quartoService.listarQuartos());
+    }
+
+    @PutMapping
+    public ResponseEntity editar(@RequestBody DadosEdicaoQuarto dados){
+        quartoService.editarQuarto(dados);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletar(@PathVariable("id")Long id){
+        quartoService.deletarQuarto(id);
+        return ResponseEntity.noContent().build();
     }
 }

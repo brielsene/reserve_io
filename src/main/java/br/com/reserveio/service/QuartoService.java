@@ -2,10 +2,7 @@ package br.com.reserveio.service;
 
 import br.com.reserveio.domain.hotel.Hotel;
 import br.com.reserveio.domain.hotel.HotelRepository;
-import br.com.reserveio.domain.quarto.DadosCadastroQuarto;
-import br.com.reserveio.domain.quarto.DadosDetalhamentoQuartos;
-import br.com.reserveio.domain.quarto.Quarto;
-import br.com.reserveio.domain.quarto.QuartoRepository;
+import br.com.reserveio.domain.quarto.*;
 import br.com.reserveio.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +36,27 @@ public class QuartoService {
         List<Quarto> all = quartoRepository.findAll();
         return all.stream().map(DadosDetalhamentoQuartos::new).toList();
 
+    }
+
+    public void editarQuarto(DadosEdicaoQuarto dados){
+        Optional<Quarto> byId = quartoRepository.findById(dados.id());
+        if(byId.isPresent()){
+            Quarto quarto = byId.get();
+            if(dados.numeroDoQuarto() != null){
+                quarto.setNumeroDoQuarto(dados.numeroDoQuarto());
+            }
+            if(dados.descricao() != null){
+                quarto.setDescricao(dados.descricao());
+            }
+            quartoRepository.save(quarto);
+            return;
+        }
+        throw new ValidacaoException("Quarto com id: " + dados.id() + ", não encontrado");
+
+    }
+
+    public void deletarQuarto(Long id){
+        quartoRepository.deleteById(id);
     }
 
 }

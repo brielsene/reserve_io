@@ -30,4 +30,10 @@ public class Quarto {
 
     }
 
+//    public Quarto(DadosEdicaoQuarto dados){
+//        this.numeroDoQuarto = dados.numeroDoQuarto();
+//        this.descricao = dados.descricao();
+//
+//    }
+
 }
