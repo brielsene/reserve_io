@@ -23,4 +23,11 @@ public class Quarto {
     @JoinColumn(name = "id_hotel")
     @JsonBackReference
     private Hotel hotel;
+
+    public Quarto(DadosCadastroQuarto dados){
+        this.numeroDoQuarto = dados.numeroDoQuarto();
+        this.descricao = dados.descricao();
+
+    }
+
 }
