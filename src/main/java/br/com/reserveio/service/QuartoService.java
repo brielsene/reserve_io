@@ -33,7 +33,7 @@ public class QuartoService {
     }
 
     public List<DadosDetalhamentoQuartos>listarQuartos(){
-        List<Quarto> all = quartoRepository.findAll();
+        List<Quarto> all = quartoRepository.findByStatus(Status.DISPONIVEL);
         return all.stream().map(DadosDetalhamentoQuartos::new).toList();
 
     }

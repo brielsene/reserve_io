@@ -1,4 +1,4 @@
-package br.com.reserveio.domain.controller;
+package br.com.reserveio.controller;
 
 import br.com.reserveio.domain.hotel.DadosAtualizaHotel;
 import br.com.reserveio.domain.hotel.DadosCadastroHotel;
