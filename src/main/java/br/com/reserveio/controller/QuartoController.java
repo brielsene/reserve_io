@@ -4,6 +4,7 @@ import br.com.reserveio.domain.quarto.DadosCadastroQuarto;
 import br.com.reserveio.domain.quarto.DadosDetalhamentoQuartos;
 import br.com.reserveio.domain.quarto.DadosEdicaoQuarto;
 import br.com.reserveio.service.QuartoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/quarto")
+@SecurityRequirement(name = "bearer-key")
 public class QuartoController {
     @Autowired
     private QuartoService quartoService;

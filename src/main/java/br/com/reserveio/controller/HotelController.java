@@ -4,6 +4,7 @@ import br.com.reserveio.domain.hotel.DadosAtualizaHotel;
 import br.com.reserveio.domain.hotel.DadosCadastroHotel;
 import br.com.reserveio.domain.hotel.DadosDeHoteis;
 import br.com.reserveio.service.HotelService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hotel")
+@SecurityRequirement(name = "bearer-key")
 public class HotelController {
     @Autowired
     private HotelService hotelService;
