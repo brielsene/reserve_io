@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "quarto")
 @Data
@@ -28,6 +30,10 @@ public class Quarto {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "ENUM('DISPONIVEL', 'INDISPONIVEL', 'MANUTENCAO')")
     private Status status;
+
+    private BigDecimal valorPerNoite;
+    private BigDecimal valorPorHora;
+
 
     public Quarto(DadosCadastroQuarto dados){
         this.numeroDoQuarto = dados.numeroDoQuarto();

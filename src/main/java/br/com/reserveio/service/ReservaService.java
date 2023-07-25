@@ -13,6 +13,9 @@ import br.com.reserveio.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,18 +47,38 @@ public class ReservaService {
         Usuario usuario = usuarioRepository.getReferenceById(dados.idUsuario());
 
         DadosVerificacaoReserva dadosVerificacaoReserva = new DadosVerificacaoReserva( quarto,dados.dataDeEntrada(), dados.dataDeSaida());
-//        boolean verificaReserva = reservaRepository.existsByQuartoAndDataDeSaidaGreaterThanEqualAndDataDeEntradaLessThanEqual(dadosVerificacaoReserva.quarto(), dadosVerificacaoReserva.dataDeEntrada(), dadosVerificacaoReserva.dataDeSaida());
-//        if(verificaReserva){
-//            throw new ValidacaoException("Uma reserva neste quarto com esse horário já existe");
-//
-//        }
         validadores.forEach(v -> v.validar(dadosVerificacaoReserva));
 
 
 
-        Reserva reserva = new Reserva(null, dados.dataDeEntrada(), dados.dataDeSaida(), quarto, usuario);
+
+        Reserva reserva = new Reserva(null, dados.dataDeEntrada(), dados.dataDeSaida(), quarto, usuario, null);
+        reserva.setValorTotal(calculaValorPerNoite(quarto, dados));
         reservaRepository.save(reserva);
 
+
+
+    }
+
+    private BigDecimal calculaValorPerNoite(Quarto quarto, DadosAgendamentoReserva dadosAgendamentoReserva){
+       BigDecimal valorPerNoite = quarto.getValorPerNoite();
+       BigDecimal valorPorHorario = quarto.getValorPorHora();
+       BigDecimal valorTotal = BigDecimal.ZERO;
+
+        Duration duration = Duration.between(dadosAgendamentoReserva.dataDeEntrada(), dadosAgendamentoReserva.dataDeSaida());
+        Long duracao = duration.toDays();
+        int horasRestantes = duration.toHoursPart();
+        if(duracao > 0){
+
+            valorTotal = valorTotal.add(valorPerNoite.multiply(BigDecimal.valueOf(duracao)));
+
+            if(horasRestantes > 0){
+                valorTotal = valorTotal.add(valorPorHorario.multiply(BigDecimal.valueOf(horasRestantes)));
+            }
+
+
+        }
+        return valorTotal;
 
 
     }

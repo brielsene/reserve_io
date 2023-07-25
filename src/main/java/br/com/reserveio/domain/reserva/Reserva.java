@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.cglib.core.Local;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,6 +36,8 @@ public class Reserva {
     @JoinColumn(name = "id_usuario")
     @JsonBackReference
     private Usuario usuario;
+
+    private BigDecimal valorTotal;
 
 
 
